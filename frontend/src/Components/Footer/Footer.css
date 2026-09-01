@@ -1,0 +1,129 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Gap adu kala (12px -> 8px) */
+    padding: 30px 0 5px; /* Top/Bottom padding adu kala */
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Logo icon math Trendly text athara gap adu kala */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.footer-logo img {
+    width: 50px;
+}
+
+.footer-logo p {
+    color: #383838;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0; /* Clear default margins */
+    line-height: 1; /* Text height eka nisa thiyena extra space adu kala */
+}
+
+.footer-social-icon {
+    display: flex;
+    gap: 10px;
+    margin-top: 0; /* Margin top adu kala */
+    margin-bottom: 0;
+}
+
+.footer-icons-container {
+    padding: 6px;
+    background: #fbfbfb;
+    border: 1px solid #ebebeb;
+    border-radius: 6px;
+}
+
+.footer-copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px; /* Gap adu kala */
+    width: 100%;
+    margin-top: 2px; /* Top margin tight kala */
+    margin-bottom: 0;
+    color: #1a1a1a;
+    font-size: 14px;
+}
+
+.footer-copyright hr {
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    height: 1px;
+    background: #e2e2e2;
+    margin: 0;
+}
+
+/* Responsive Styles */
+@media(max-width: 1280px) {
+    .footer-logo p {
+        font-size: 30px;
+    }
+}
+
+@media(max-width: 1024px) {
+    .footer {
+        gap: 6px;
+    }
+    .footer-logo img {
+        width: 45px;
+    }
+    .footer-logo p {
+        font-size: 28px;
+    }
+    .footer-copyright {
+        font-size: 13px;
+    }
+}
+
+@media(max-width: 800px) {
+    .footer {
+        gap: 5px;
+    }
+    .footer-logo {
+        gap: 6px;
+    }
+    .footer-logo img {
+        width: 40px;
+    }
+    .footer-logo p {
+        font-size: 24px;
+    }
+    .footer-copyright {
+        font-size: 13px;
+        gap: 5px;
+    }
+}
+
+@media(max-width: 500px) {
+    .footer {
+        gap: 4px;
+    }
+    .footer-logo {
+        gap: 4px;
+    }
+    .footer-logo img {
+        width: 32px;
+    }
+    .footer-logo p {
+        font-size: 20px;
+    }
+    .footer-social-icon {
+        gap: 6px;
+    }
+    .footer-icons-container {
+        padding: 4px;
+    }
+    .footer-copyright {
+        font-size: 12px;
+        gap: 4px;
+    }
+}
