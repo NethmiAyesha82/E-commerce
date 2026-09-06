@@ -3,12 +3,20 @@ import './Item.css'
 import { Link } from 'react-router-dom'
 
 const Item = (props) => {
+  const getSecureImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http://')) {
+      return url.replace('http://', 'https://');
+    }
+    return url;
+  };
+
   return (
     <div className='item'>
       <Link to={`/product/${props.id}`}>
         <img 
           onClick={() => window.scrollTo(0, 0)} 
-          src={props.image} 
+          src={getSecureImageUrl(props.image)} 
           alt={props.name} 
         />
       </Link>
