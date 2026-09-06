@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from './Components/Navbar/Navbar'
-import Admin from './Pages/Admin/Admin'
+import React, { useEffect, useState } from 'react';
+import Navbar from './Components/Navbar/Navbar';
+import Admin from './Pages/Admin/Admin';
 
 const App = () => {
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
@@ -45,7 +45,7 @@ const App = () => {
       <Navbar />
       <Admin />
     </div>
-  )
-}
+  );
+};
 
 export default App;
