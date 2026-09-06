@@ -9,21 +9,34 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json({ limit: '10mb' }));
 
-// CORS setup for Vercel
+const allowedOrigins = [
+  "https://e-commerce-5qys.vercel.app",
+  "https://e-commerce-dozh.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173"
+];
+
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(null, true); 
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
 }));
 
-mongoose
-  .connect(
-    "mongodb+srv://root:1234@cluster0.gztopa6.mongodb.net/ecommerce"
-  )
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log("DB Connection Error:", err));
+const mongoURI = "mongodb+srv://root:1234@cluster0.gztopa6.mongodb.net/ecommerce";
+if (mongoose.connection.readyState === 0) {
+  mongoose
+    .connect(mongoURI)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((err) => console.log("DB Connection Error:", err));
+}
 
-const Product = mongoose.model("Product", {
+const Product = mongoose.models.Product || mongoose.model("Product", {
   id: { type: Number, required: true },
   name: { type: String, required: true },
   image: { type: String, required: true },
@@ -34,7 +47,7 @@ const Product = mongoose.model("Product", {
   available: { type: Boolean, default: true }
 });
 
-const Users = mongoose.model("Users", {
+const Users = mongoose.models.Users || mongoose.model("Users", {
   name: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
@@ -204,7 +217,7 @@ app.post("/getcart", fetchUser, async (req, res) => {
   }
 });
 
-app.get("/allproduct", async (req, res) => {
+app.get(["/allproducts", "/allproduct"], async (req, res) => {
   try {
     let products = await Product.find({});
     res.send(products);
@@ -268,12 +281,14 @@ app.get("/popularinwomen", async (req, res) => {
   }
 });
 
-app.listen(port, (error) => {
-  if (!error) {
-    console.log("Server Running on Port " + port);
-  } else {
-    console.log("Error : " + error);
-  }
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, (error) => {
+    if (!error) {
+      console.log("Server Running on Port " + port);
+    } else {
+      console.log("Error : " + error);
+    }
+  });
+}
 
 module.exports = app;
