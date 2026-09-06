@@ -18,11 +18,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(null, true);
-      }
+      callback(null, true);
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
@@ -49,6 +45,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Database Schemas
 const Product =
   mongoose.models.Product ||
   mongoose.model("Product", {
@@ -62,7 +59,20 @@ const Product =
     available: { type: Boolean, default: true }
   });
 
-// HTTP/Localhost image URLs automatically Fix කරන Helper Function එක
+const Users =
+  mongoose.models.Users ||
+  mongoose.model("Users", {
+    name: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
+    cartData: { type: Object },
+    date: { type: Date, default: Date.now }
+  });
+
+// Image Upload Configuration
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 const fixImageUrl = (product) => {
   let img = product.image;
   if (img && img.startsWith("http://")) {
@@ -71,8 +81,107 @@ const fixImageUrl = (product) => {
   return { ...product._doc, image: img };
 };
 
+// Middleware to fetch user token
+const fetchUser = async (req, res, next) => {
+  const token = req.header("auth-token");
+  if (!token) {
+    return res.status(401).send({ errors: "Please authenticate using a valid token" });
+  }
+  try {
+    const data = jwt.verify(token, "secret_ecom");
+    req.user = data.user;
+    next();
+  } catch (error) {
+    return res.status(401).send({ errors: "Token is not valid" });
+  }
+};
+
+// --- ROUTES ---
+
 app.get("/", (req, res) => {
   res.send("Backend API Running Successfully");
+});
+
+// Authentication Routes
+app.post("/signup", async (req, res) => {
+  try {
+    let check = await Users.findOne({ email: req.body.email });
+    if (check) {
+      return res.status(400).json({ success: false, errors: "Existing user found" });
+    }
+
+    let cart = {};
+    for (let i = 0; i < 300; i++) {
+      cart[i] = 0;
+    }
+
+    const user = new Users({
+      name: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      cartData: cart
+    });
+
+    await user.save();
+
+    const data = { user: { id: user.id } };
+    const token = jwt.sign(data, "secret_ecom");
+
+    res.json({ success: true, token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, errors: "Signup failed" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const ADMIN_EMAIL = "admin@gmail.com";
+    const ADMIN_PASSWORD = "admin123password";
+
+    if (req.body.email === ADMIN_EMAIL && req.body.password === ADMIN_PASSWORD) {
+      const adminData = { admin: { email: ADMIN_EMAIL } };
+      const adminToken = jwt.sign(adminData, "secret_admin_ecom");
+      return res.json({ success: true, isAdmin: true, token: adminToken });
+    }
+
+    let user = await Users.findOne({ email: req.body.email });
+    if (!user) {
+      return res.json({ success: false, errors: "Wrong Email Id" });
+    }
+
+    const passCompare = req.body.password === user.password;
+    if (!passCompare) {
+      return res.json({ success: false, errors: "Wrong Password" });
+    }
+
+    const data = { user: { id: user.id } };
+    const token = jwt.sign(data, "secret_ecom");
+
+    res.json({ success: true, isAdmin: false, token });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, errors: "Login failed" });
+  }
+});
+
+// Product Routes
+app.post("/upload", upload.single("product"), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: 0, message: "No file uploaded" });
+    }
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let mimeType = req.file.mimetype;
+    let dataURI = "data:" + mimeType + ";base64," + b64;
+
+    res.json({
+      success: 1,
+      image_url: dataURI
+    });
+  } catch (error) {
+    res.status(500).json({ success: 0, message: "Image processing error" });
+  }
 });
 
 app.get(["/allproducts", "/allproduct"], async (req, res) => {
@@ -82,6 +191,38 @@ app.get(["/allproducts", "/allproduct"], async (req, res) => {
     res.send(fixedProducts);
   } catch (error) {
     res.status(500).send({ error: "Error fetching products" });
+  }
+});
+
+app.post("/addproduct", async (req, res) => {
+  try {
+    let products = await Product.find({});
+    let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+
+    const product = new Product({
+      id: id,
+      name: req.body.name,
+      image: req.body.image,
+      category: req.body.category,
+      new_price: req.body.new_price,
+      old_price: req.body.old_price
+    });
+
+    await product.save();
+    res.json({ success: true, name: req.body.name });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false });
+  }
+});
+
+app.post("/removeproduct", async (req, res) => {
+  try {
+    await Product.findOneAndDelete({ id: req.body.id });
+    res.json({ success: true, name: req.body.name });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false });
   }
 });
 
@@ -102,6 +243,58 @@ app.get("/popularinwomen", async (req, res) => {
     res.send(popular_in_women);
   } catch (error) {
     res.status(500).send([]);
+  }
+});
+
+// Cart Routes
+app.post("/addtocart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    if (!userData) return res.status(404).json({ success: false, message: "User not found" });
+
+    const itemId = req.body.itemId;
+    if (!userData.cartData) userData.cartData = {};
+    if (!userData.cartData[itemId]) userData.cartData[itemId] = 0;
+
+    userData.cartData[itemId] += 1;
+
+    await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: { cartData: userData.cartData } }
+    );
+
+    res.json({ success: true, message: "Added" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error adding product" });
+  }
+});
+
+app.post("/removefromcart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    if (!userData) return res.status(404).json({ success: false, message: "User not found" });
+
+    const itemId = req.body.itemId;
+    if (userData.cartData) delete userData.cartData[itemId];
+
+    await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      { $set: { cartData: userData.cartData } }
+    );
+
+    res.json({ success: true, message: "Product completely removed" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error removing product" });
+  }
+});
+
+app.post("/getcart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    if (!userData) return res.status(404).json({ success: false, message: "User not found" });
+    res.json(userData.cartData || {});
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Error getting cart" });
   }
 });
 
