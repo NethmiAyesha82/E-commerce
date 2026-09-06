@@ -20,6 +20,11 @@ const Navbar = () => {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('admin-active')
+    window.location.href = "http://localhost:3000/login"
+  }
+
   return (
     <div className="navbar">
 
@@ -36,21 +41,27 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="profile-container">
-        <img
-          src={profileImage}
-          alt="Profile"
-          className="nav-profile"
-          onClick={handleProfileClick}
-        />
+      <div className="nav-right-container">
+        <div className="profile-container">
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="nav-profile"
+            onClick={handleProfileClick}
+          />
 
-        <input
-          type="file"
-          ref={fileInputRef}
-          accept="image/*"
-          onChange={handleImageChange}
-          style={{ display: 'none' }}
-        />
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+          />
+        </div>
+
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
       </div>
 
     </div>

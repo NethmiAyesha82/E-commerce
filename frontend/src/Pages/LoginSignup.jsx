@@ -34,8 +34,13 @@ const LoginSignup = () => {
       const responseData = await response.json();
       
       if (responseData.success) {
-        localStorage.setItem('auth-token', responseData.token);
-        window.location.replace("/");
+        if (responseData.isAdmin) {
+          alert("Welcome Admin!");
+          window.location.href = "http://localhost:5173?admin=true";
+        } else {
+          localStorage.setItem('auth-token', responseData.token);
+          window.location.replace("/");
+        }
       } else {
         alert(responseData.errors || "Invalid Credentials");
       }
