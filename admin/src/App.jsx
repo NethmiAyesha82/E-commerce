@@ -21,7 +21,7 @@ const App = () => {
         <h1 style={{ color: '#d9534f', marginBottom: '10px' }}>Access Denied</h1>
         <p style={{ color: '#555', fontSize: '16px' }}>Please login as Admin using the main store Frontend Login page.</p>
         <button 
-          onClick={() => window.location.href = "http://localhost:3000/login"}
+          onClick={() => window.location.href = "https://e-commerce-5qys.vercel.app/"}
           style={{ 
             padding: '12px 30px', 
             background: '#ff4141', 
