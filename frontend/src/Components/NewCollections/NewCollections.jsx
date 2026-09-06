@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './NewCollections.css';
 import Item from '../Items/Item';
 
+const BASE_URL = "https://virtual-assistant-85xq.vercel.app";
+
 const NewCollections = () => {
   const [new_collections, setNew_collection] = useState([]);
 
   useEffect(() => {
-    fetch('https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/newcollections')
+    fetch(`${BASE_URL}/newcollections`)
       .then((response) => response.json())
       .then((data) => setNew_collection(data))
       .catch((error) => console.error("Error fetching new collections:", error));

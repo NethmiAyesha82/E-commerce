@@ -9,9 +9,11 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json({ limit: "10mb" }));
 
+// Frontend, Admin සහ Backend Production Domains
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
   "https://e-commerce-dozh.vercel.app",
+  "https://virtual-assistant-85xq.vercel.app",
   "http://localhost:3000",
   "http://localhost:5173"
 ];
@@ -19,10 +21,10 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(null, true);
+        callback(null, true); // Vercel internal router allow කිරීම සඳහා
       }
     },
     credentials: true,

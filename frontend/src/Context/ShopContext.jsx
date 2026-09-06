@@ -2,13 +2,15 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const ShopContext = createContext(null);
 
+const BASE_URL = "https://virtual-assistant-85xq.vercel.app";
+
 const ShopContextProvider = (props) => {
   const [all_product, setAll_Product] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [cartSizes, setCartSizes] = useState({});
 
   useEffect(() => {
-    fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/allproducts")
+    fetch(`${BASE_URL}/allproducts`)
       .then((response) => response.json())
       .then((data) => setAll_Product(data))
       .catch((error) => console.error("Error fetching products:", error));
@@ -16,7 +18,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/getcart", {
+      fetch(`${BASE_URL}/getcart`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -45,7 +47,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/addtocart", {
+      fetch(`${BASE_URL}/addtocart`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -76,7 +78,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/removefromcart", {
+      fetch(`${BASE_URL}/removefromcart`, {
         method: "POST",
         headers: {
           Accept: "application/json",
