@@ -45,7 +45,6 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Database Schemas
 const Product =
   mongoose.models.Product ||
   mongoose.model("Product", {
@@ -69,19 +68,22 @@ const Users =
     date: { type: Date, default: Date.now }
   });
 
-// Image Upload Configuration
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const fixImageUrl = (product) => {
-  let img = product.image;
-  if (img && img.startsWith("http://")) {
+  if (!product) return product;
+  let prodObj = product._doc ? { ...product._doc } : { ...product };
+  let img = prodObj.image || "";
+
+  if (img.startsWith("http://")) {
     img = img.replace("http://", "https://");
   }
-  return { ...product._doc, image: img };
+
+  prodObj.image = img;
+  return prodObj;
 };
 
-// Middleware to fetch user token
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
@@ -96,13 +98,10 @@ const fetchUser = async (req, res, next) => {
   }
 };
 
-// --- ROUTES ---
-
 app.get("/", (req, res) => {
   res.send("Backend API Running Successfully");
 });
 
-// Authentication Routes
 app.post("/signup", async (req, res) => {
   try {
     let check = await Users.findOne({ email: req.body.email });
@@ -165,7 +164,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Product Routes
 app.post("/upload", upload.single("product"), (req, res) => {
   try {
     if (!req.file) {
@@ -246,7 +244,6 @@ app.get("/popularinwomen", async (req, res) => {
   }
 });
 
-// Cart Routes
 app.post("/addtocart", fetchUser, async (req, res) => {
   try {
     let userData = await Users.findOne({ _id: req.user.id });

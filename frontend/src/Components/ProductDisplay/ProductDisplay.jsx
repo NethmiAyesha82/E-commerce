@@ -11,6 +11,17 @@ const ProductDisplay = (props) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [quantity, setQuantity] = useState(1);
 
+    if (!product) return null;
+
+    const getSecureImageUrl = (url) => {
+        if (!url) return '';
+        if (url.startsWith('http://')) {
+            return url.replace('http://', 'https://');
+        }
+        return url;
+    };
+
+    const imageUrl = getSecureImageUrl(product.image);
     const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
     const increaseQuantity = () => {
@@ -29,162 +40,100 @@ const ProductDisplay = (props) => {
             <div className="productdisplay-left">
 
                 <div className="productdisplay-img-list">
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
+                    <img src={imageUrl} alt="" />
+                    <img src={imageUrl} alt="" />
+                    <img src={imageUrl} alt="" />
+                    <img src={imageUrl} alt="" />
                 </div>
 
                 <div className="productdisplay-img">
                     <img
                         className='productdisplay-main-img'
-                        src={product.image}
+                        src={imageUrl}
                         alt=""
                     />
                 </div>
 
             </div>
 
-
             <div className="productdisplay-right">
 
                 <h1>{product.name}</h1>
 
-
                 <div className="productdisplay-right-stars">
-
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
                     <img src={star_icon} alt="" />
                     <img src={star_dull_icon} alt="" />
-
                     <p>(122)</p>
-
                 </div>
 
-
                 <div className="productdisplay-right-prices">
-
                     <div className="productdisplay-right-price-old">
                         ${product.old_price}
                     </div>
-
                     <div className="productdisplay-right-price-new">
                         ${product.new_price}
                     </div>
-
                 </div>
-
 
                 <div className="productdisplay-right-description">
-
                     A lightweight, usually knitted, pullover shirt, close-fitting and with
-                    a round neckline and short sleeves, worn as an undershirt or outer
-                    garment.
-
+                    a round neckline and short sleeves, worn as an undershirt or outer garment.
                 </div>
 
-
-                {/* SIZE */}
-
                 <div className="productdisplay-right-size">
-
                     <h1>Select Size</h1>
-
                     <div className="productdisplay-size-options">
-
                         {sizes.map((size) => (
-
                             <div
                                 key={size}
-                                className={
-                                    selectedSize === size
-                                        ? 'selected'
-                                        : ''
-                                }
+                                className={selectedSize === size ? 'selected' : ''}
                                 onClick={() => setSelectedSize(size)}
                             >
                                 {size}
                             </div>
-
                         ))}
-
                     </div>
-
                 </div>
-
-
-                {/* QUANTITY */}
 
                 <div className="productdisplay-quantity">
-
                     <h1>Quantity</h1>
-
                     <div className="productdisplay-quantity-selector">
-
-                        <button
-                            onClick={decreaseQuantity}
-                        >
-                            -
-                        </button>
-
-                        <span>
-                            {quantity}
-                        </span>
-
-                        <button
-                            onClick={increaseQuantity}
-                        >
-                            +
-                        </button>
-
+                        <button onClick={decreaseQuantity}>-</button>
+                        <span>{quantity}</span>
+                        <button onClick={increaseQuantity}>+</button>
                     </div>
-
                 </div>
-
-
-                {/* ADD TO CART */}
 
                 <button
                     className="productdisplay-add-cart"
                     onClick={() => {
-
                         if (!selectedSize) {
                             alert('Please select a size');
                             return;
                         }
-
                         for (let i = 0; i < quantity; i++) {
-                            addToCart(
-                                product.id,
-                                selectedSize
-                            );
+                            addToCart(product.id, selectedSize);
                         }
-
                     }}
                 >
                     ADD TO CART
                 </button>
 
-
                 <p className='productdisplay-right-category'>
-
                     <span>Category :</span> {product.category}
-
                 </p>
 
-
                 <p className='productdisplay-right-category'>
-
                     <span>Tags :</span> Modern, Latest
-
                 </p>
 
             </div>
 
         </div>
-    )
-}
+    );
+};
 
-export default ProductDisplay
+export default ProductDisplay;
