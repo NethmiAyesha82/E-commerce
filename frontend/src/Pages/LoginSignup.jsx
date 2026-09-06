@@ -22,7 +22,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     try {
-      const response = await fetch('https://e-commerce-five-snowy-66.vercel.app/', {
+      const response = await fetch('https://virtual-assistant-85xq.vercel.app/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -36,7 +36,7 @@ const LoginSignup = () => {
       if (responseData.success) {
         if (responseData.isAdmin) {
           alert("Welcome Admin!");
-          window.location.href = "https://e-commerce-dozh.vercel.app/";
+          window.location.href = "https://e-commerce-dozh.vercel.app?admin=true";
         } else {
           localStorage.setItem('auth-token', responseData.token);
           window.location.replace("/");
@@ -45,13 +45,13 @@ const LoginSignup = () => {
         alert(responseData.errors || "Invalid Credentials");
       }
     } catch (err) {
-      alert("Error connecting to server. Make sure backend is running on port 4000.");
+      alert("Error connecting to server. Please try again.");
     }
   };
 
   const signup = async () => {
     try {
-      const response = await fetch('http://localhost:4000/signup', {
+      const response = await fetch('https://virtual-assistant-85xq.vercel.app/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -66,7 +66,7 @@ const LoginSignup = () => {
         alert(responseData.errors);
       }
     } catch (err) {
-      alert("Error connecting to server. Make sure backend is running on port 4000.");
+      alert("Error connecting to server. Please try again.");
     }
   };
 
