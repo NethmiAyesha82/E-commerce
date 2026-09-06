@@ -5,11 +5,9 @@ const multer = require("multer");
 const cors = require("cors");
 
 const app = express();
-const port = process.env.PORT || 4000;
 
 app.use(express.json({ limit: "10mb" }));
 
-// Frontend domains සඳහා CORS සකස් කිරීම
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
   "https://e-commerce-dozh.vercel.app",
@@ -35,10 +33,15 @@ app.options("*", cors());
 
 const mongoURI = "mongodb+srv://root:1234@cluster0.gztopa6.mongodb.net/ecommerce";
 
+let isConnected = false;
+
 const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) return;
+  if (isConnected && mongoose.connection.readyState === 1) {
+    return;
+  }
   try {
-    await mongoose.connect(mongoURI);
+    const db = await mongoose.connect(mongoURI);
+    isConnected = db.connections[0].readyState === 1;
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("DB Connection Error:", err);
@@ -297,15 +300,5 @@ app.get("/popularinwomen", async (req, res) => {
     res.status(500).send([]);
   }
 });
-
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, (error) => {
-    if (!error) {
-      console.log("Server Running on Port " + port);
-    } else {
-      console.log("Error : " + error);
-    }
-  });
-}
 
 module.exports = app;
