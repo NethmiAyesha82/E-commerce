@@ -767,6 +767,32 @@ app.get(
   }
 );
 
+/* =========================
+   ADMIN LOGIN API
+   ========================= */
+
+app.post("/adminlogin", async (req, res) => {
+  const { email, password } = req.body;
+
+  // මෙතන ඔයාට කැමති Admin Email සහ Password එක දෙන්න
+  const ADMIN_EMAIL = "admin@gmail.com";
+  const ADMIN_PASSWORD = "admin123password";
+
+  if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    const data = {
+      admin: {
+        email: ADMIN_EMAIL
+      }
+    };
+    
+    // Secret Key එකක් භාවිතයෙන් Admin Token එකක් හදනවා
+    const token = jwt.sign(data, "secret_admin_ecom");
+    return res.json({ success: true, token });
+  } else {
+    return res.status(400).json({ success: false, errors: "Invalid Email or Password" });
+  }
+});
+
 
 /* =========================
    START SERVER
