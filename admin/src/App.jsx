@@ -15,13 +15,18 @@ const App = () => {
     }
   }, []);
 
+  const handleGoToLogin = () => {
+    localStorage.removeItem('admin-active');
+    window.location.href = "https://e-commerce-5qys.vercel.app/login";
+  };
+
   if (!isAdminLoggedIn) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#ffe6e6', fontFamily: 'Poppins, sans-serif' }}>
         <h1 style={{ color: '#d9534f', marginBottom: '10px' }}>Access Denied</h1>
         <p style={{ color: '#555', fontSize: '16px' }}>Please login as Admin using the main store Frontend Login page.</p>
         <button 
-          onClick={() => window.location.href = "https://e-commerce-5qys.vercel.app/login"}
+          onClick={handleGoToLogin}
           style={{ 
             padding: '12px 30px', 
             background: '#ff4141', 
