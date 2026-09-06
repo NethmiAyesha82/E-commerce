@@ -22,7 +22,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     try {
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch('https://e-commerce-five-snowy-66.vercel.app/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

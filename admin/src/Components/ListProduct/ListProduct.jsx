@@ -13,7 +13,7 @@ const ListProduct = () => {
         try {
             console.log("Fetching Products...");
 
-            const res = await fetch('http://localhost:4000/allproduct');
+            const res = await fetch('https://e-commerce-five-snowy-66.vercel.app/');
 
             if (!res.ok) {
                 throw new Error(`HTTP Error: ${res.status}`);
@@ -38,7 +38,7 @@ const ListProduct = () => {
     const remove_product = async (id) => {
         try {
             const response = await fetch(
-                'http://localhost:4000/removeproduct',
+                'https://e-commerce-five-snowy-66.vercel.app/',
                 {
                     method: 'POST',
                     headers: {
