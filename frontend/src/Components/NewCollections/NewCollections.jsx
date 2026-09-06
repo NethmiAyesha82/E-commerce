@@ -7,7 +7,7 @@ const NewCollections = () => {
   const [new_collections, setNew_collection] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/newcollections')
+    fetch('https://virtual-assistant-85xq.vercel.app/newcollections')
       .then((response) => response.json())
       .then((data) => setNew_collection(data));
   }, [])
