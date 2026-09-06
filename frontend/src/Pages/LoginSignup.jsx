@@ -14,40 +14,46 @@ const LoginSignup = () => {
   };
 
   const login = async () => {
-    let responseData;
-    await fetch('https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/form-data',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    }).then((response) => response.json()).then((data) => responseData = data);
+    try {
+      const response = await fetch('https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const responseData = await response.json();
 
-    if (responseData.success) {
-      localStorage.setItem('auth-token', responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+      if (responseData.success) {
+        localStorage.setItem('auth-token', responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
     }
   };
 
   const signup = async () => {
-    let responseData;
-    await fetch('https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/signup', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/form-data',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    }).then((response) => response.json()).then((data) => responseData = data);
+    try {
+      const response = await fetch('https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const responseData = await response.json();
 
-    if (responseData.success) {
-      localStorage.setItem('auth-token', responseData.token);
-      window.location.replace("/");
-    } else {
-      alert(responseData.errors);
+      if (responseData.success) {
+        localStorage.setItem('auth-token', responseData.token);
+        window.location.replace("/");
+      } else {
+        alert(responseData.errors);
+      }
+    } catch (error) {
+      console.error("Signup Error:", error);
     }
   };
 
