@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: "10mb" }));
 
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
@@ -16,46 +16,62 @@ const allowedOrigins = [
   "http://localhost:5173"
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(null, true); 
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+  })
+);
+
+app.options("*", cors());
 
 const mongoURI = "mongodb+srv://root:1234@cluster0.gztopa6.mongodb.net/ecommerce";
-if (mongoose.connection.readyState === 0) {
-  mongoose
-    .connect(mongoURI)
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err) => console.log("DB Connection Error:", err));
-}
 
-const Product = mongoose.models.Product || mongoose.model("Product", {
-  id: { type: Number, required: true },
-  name: { type: String, required: true },
-  image: { type: String, required: true },
-  category: { type: String, required: true },
-  new_price: { type: Number, required: true },
-  old_price: { type: Number, required: true },
-  date: { type: Date, default: Date.now },
-  available: { type: Boolean, default: true }
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  try {
+    await mongoose.connect(mongoURI);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("DB Connection Error:", err);
+  }
+};
+
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
 });
 
-const Users = mongoose.models.Users || mongoose.model("Users", {
-  name: { type: String },
-  email: { type: String, unique: true },
-  password: { type: String },
-  cartData: { type: Object },
-  date: { type: Date, default: Date.now }
-});
+const Product =
+  mongoose.models.Product ||
+  mongoose.model("Product", {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    image: { type: String, required: true },
+    category: { type: String, required: true },
+    new_price: { type: Number, required: true },
+    old_price: { type: Number, required: true },
+    date: { type: Date, default: Date.now },
+    available: { type: Boolean, default: true }
+  });
 
-// Use Memory Storage for Vercel deployment
+const Users =
+  mongoose.models.Users ||
+  mongoose.model("Users", {
+    name: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
+    cartData: { type: Object },
+    date: { type: Date, default: Date.now }
+  });
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -281,7 +297,7 @@ app.get("/popularinwomen", async (req, res) => {
   }
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   app.listen(port, (error) => {
     if (!error) {
       console.log("Server Running on Port " + port);
