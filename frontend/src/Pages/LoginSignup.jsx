@@ -36,7 +36,7 @@ const LoginSignup = () => {
       if (responseData.success) {
         if (responseData.isAdmin) {
           alert("Welcome Admin!");
-          window.location.href = "http://localhost:5173?admin=true";
+          window.location.href = "https://e-commerce-dozh.vercel.app/";
         } else {
           localStorage.setItem('auth-token', responseData.token);
           window.location.replace("/");
