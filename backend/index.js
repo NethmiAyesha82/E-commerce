@@ -24,7 +24,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(null, true); // Vercel internal router allow කිරීම සඳහා
+        callback(null, true);
       }
     },
     credentials: true,
