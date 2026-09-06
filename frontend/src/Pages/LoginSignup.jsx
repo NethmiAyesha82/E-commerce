@@ -27,10 +27,10 @@ const LoginSignup = () => {
       const responseData = await response.json();
 
       if (responseData.success) {
-        localStorage.setItem('auth-token', responseData.token);
         if (responseData.isAdmin) {
           window.location.replace("https://e-commerce-dozh.vercel.app?admin=true");
         } else {
+          localStorage.setItem('auth-token', responseData.token);
           window.location.replace("/");
         }
       } else {
