@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CSS/LoginSignup.css';
 
 const BASE_URL = "https://e-commerce-five-snowy-66.vercel.app";
+
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
@@ -27,7 +28,11 @@ const LoginSignup = () => {
 
       if (responseData.success) {
         localStorage.setItem('auth-token', responseData.token);
-        window.location.replace("/");
+        if (responseData.isAdmin) {
+          window.location.replace("https://e-commerce-dozh.vercel.app");
+        } else {
+          window.location.replace("/");
+        }
       } else {
         alert(responseData.errors);
       }
