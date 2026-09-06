@@ -1,8 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect
-} from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const ShopContext = createContext(null);
 
@@ -12,19 +8,15 @@ const ShopContextProvider = (props) => {
   const [cartSizes, setCartSizes] = useState({});
 
   useEffect(() => {
-    fetch("https://virtual-assistant-85xq.vercel.app/allproducts")
+    fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/allproducts")
       .then((response) => response.json())
-      .then((data) => {
-        setAll_Product(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-      });
+      .then((data) => setAll_Product(data))
+      .catch((error) => console.error("Error fetching products:", error));
 
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq.vercel.app/getcart", {
+      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/getcart", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -34,12 +26,8 @@ const ShopContextProvider = (props) => {
         body: JSON.stringify({})
       })
         .then((response) => response.json())
-        .then((data) => {
-          setCartItems(data);
-        })
-        .catch((error) => {
-          console.error("Error getting cart:", error);
-        });
+        .then((data) => setCartItems(data))
+        .catch((error) => console.error("Error getting cart:", error));
     }
   }, []);
 
@@ -57,7 +45,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq.vercel.app/addtocart", {
+      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/addtocart", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -67,12 +55,8 @@ const ShopContextProvider = (props) => {
         body: JSON.stringify({ itemId: itemId })
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log("Add cart:", data);
-        })
-        .catch((error) => {
-          console.error("Error adding to cart:", error);
-        });
+        .then((data) => console.log("Add cart:", data))
+        .catch((error) => console.error("Error adding to cart:", error));
     }
   };
 
@@ -92,7 +76,7 @@ const ShopContextProvider = (props) => {
     const token = localStorage.getItem("auth-token");
 
     if (token) {
-      fetch("https://virtual-assistant-85xq.vercel.app/removefromcart", {
+      fetch("https://virtual-assistant-85xq-albvazxzf-nethmi-ayesha.vercel.app/removefromcart", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -102,12 +86,8 @@ const ShopContextProvider = (props) => {
         body: JSON.stringify({ itemId: itemId })
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log("Remove cart:", data);
-        })
-        .catch((error) => {
-          console.error("Error removing from cart:", error);
-        });
+        .then((data) => console.log("Remove cart:", data))
+        .catch((error) => console.error("Error removing from cart:", error));
     }
   };
 
