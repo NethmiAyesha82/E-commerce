@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('admin-active')
-    window.location.href = "http://localhost:3000/login"
+    window.location.href = "https://e-commerce-5qys.vercel.app/"
   }
 
   return (
