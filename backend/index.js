@@ -9,11 +9,10 @@ const port = process.env.PORT || 4000;
 
 app.use(express.json({ limit: "10mb" }));
 
-// Frontend, Admin සහ Backend Production Domains
+// Frontend domains සඳහා CORS සකස් කිරීම
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
   "https://e-commerce-dozh.vercel.app",
-  "https://virtual-assistant-85xq.vercel.app",
   "http://localhost:3000",
   "http://localhost:5173"
 ];

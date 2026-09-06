@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const ShopContext = createContext(null);
 
-const BASE_URL = "https://virtual-assistant-85xq.vercel.app";
+const BASE_URL = "https://e-commerce-five-snowy-66.vercel.app";
 
 const ShopContextProvider = (props) => {
   const [all_product, setAll_Product] = useState([]);

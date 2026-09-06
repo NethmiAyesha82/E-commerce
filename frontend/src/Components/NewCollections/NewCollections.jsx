@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './NewCollections.css';
 import Item from '../Items/Item';
 
-const BASE_URL = "https://virtual-assistant-85xq.vercel.app";
+const BASE_URL = "https://e-commerce-five-snowy-66.vercel.app";
 
 const NewCollections = () => {
   const [new_collections, setNew_collection] = useState([]);

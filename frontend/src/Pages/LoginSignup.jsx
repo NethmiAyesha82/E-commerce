@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CSS/LoginSignup.css';
 
-const BASE_URL = "https://virtual-assistant-85xq.vercel.app";
+const BASE_URL = "https://e-commerce-five-snowy-66.vercel.app";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login");
