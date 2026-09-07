@@ -5,9 +5,10 @@
 }
 
 body {
-    font-family: "Poppins";
+    font-family: "Poppins", sans-serif;
     background-color: #fac3c3;
     width: 100%;
     min-height: 100vh; 
     overflow-x: hidden;
+    overflow-y: auto;
 }
