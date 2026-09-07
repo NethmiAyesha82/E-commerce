@@ -42,8 +42,10 @@ const ListProduct = () => {
                 }
             );
 
-            await response.json();
-            await fetchInfo();
+            if (response.ok) {
+                await response.json();
+                await fetchInfo();
+            }
         } catch (error) {
             console.error("Delete Error:", error);
         }
@@ -68,8 +70,8 @@ const ListProduct = () => {
                 {loading ? (
                     <p style={{ textAlign: 'center' }}>Loading...</p>
                 ) : allproduct.length > 0 ? (
-                    allproduct.map((product) => (
-                        <div key={product.id}>
+                    allproduct.map((product, index) => (
+                        <div key={product.id || index}>
                             <div className="listproduct-format-main listproduct-format">
                                 <img
                                     src={product.image}
