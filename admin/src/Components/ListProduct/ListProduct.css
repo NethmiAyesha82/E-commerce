@@ -2,15 +2,16 @@
     display: flex;  
     flex-direction: column;  
     align-items: center;  
-    width: 95%;  
+    width: 100%;  
     max-width: 1200px;
-    height: calc(100vh - 100px);
-    max-height: 800px;
+    height: auto;
+    max-height: calc(100vh - 120px);
     padding: 20px 40px;  
-    margin: 20px auto; 
+    margin: 0 auto; 
     border-radius: 6px;  
     background: white; 
     box-sizing: border-box; 
+    flex: 1;
 }  
   
 /* Main grid and headers alignment */
@@ -82,10 +83,8 @@
 
 @media (max-width: 1280px) {  
     .list-product {  
-        width: 95%;  
         padding: 15px 30px;  
-        margin: 15px auto; 
-        height: calc(100vh - 80px);
+        max-height: calc(100vh - 100px);
     }  
   
     .listproduct-format-main {  
@@ -100,9 +99,7 @@
   
 @media (max-width: 1024px) {  
     .list-product {  
-        width: 96%;  
         padding: 15px 20px;  
-        margin: 15px auto; 
     }  
   
     .listproduct-format-main {  
@@ -117,10 +114,8 @@
   
 @media (max-width: 800px) {  
     .list-product {  
-        width: 96%;  
-        height: calc(100vh - 60px);
         padding: 10px 15px;  
-        margin: 10px auto;  
+        max-height: calc(100vh - 80px);
     }  
   
     .listproduct-format-main {  
@@ -136,11 +131,9 @@
   
 @media (max-width: 500px) {  
     .list-product {  
-        width: 100%;  
-        height: calc(100vh - 40px);
         padding: 10px 5px;  
-        margin: 5px auto;  
         border-radius: 0;  
+        max-height: calc(100vh - 60px);
     }  
   
     .listproduct-format-main {  
