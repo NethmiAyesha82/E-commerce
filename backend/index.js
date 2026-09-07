@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(express.json({ limit: "10mb" }));
+app.use("/images", express.static(path.join(__dirname, "upload/images")));
 
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
