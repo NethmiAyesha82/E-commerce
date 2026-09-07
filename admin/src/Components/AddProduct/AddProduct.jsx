@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import './AddProduct.css'
-import upload_area from '../../assets/upload_area.svg'
+import React, { useState } from 'react';
+import './AddProduct.css';
+import upload_area from '../../assets/upload_area.svg';
 
 const AddProduct = () => {
 
@@ -11,48 +11,61 @@ const AddProduct = () => {
         category: "women",
         new_price: "",
         old_price: ""
-    })
+    });
 
     const imageHandler = (e) => {
         setImage(e.target.files[0]);
-    }
+    };
+
     const changehandler = (e) => {
-        setProductDetails({ ...productDetails, [e.target.name]: e.target.value })
-    }
+        setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+    };
 
     const Add_Product = async () => {
-        console.log(productDetails);
         let responseData;
         let product = productDetails;
 
         let formData = new FormData();
         formData.append('product', image); 
 
-        await fetch('https://e-commerce-five-snowy-66.vercel.app/', {
+        await fetch('https://e-commerce-five-snowy-66.vercel.app/upload', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
             },
             body: formData,
-        }).then((resp) => resp.json()).then((data) => { responseData = data }); 
+        })
+        .then((resp) => resp.json())
+        .then((data) => { responseData = data; }); 
 
-        if (responseData.success) 
-        {
+        if (responseData && responseData.success) {
             product.image = responseData.image_url;
-            console.log(product);
-            await fetch('https://e-commerce-five-snowy-66.vercel.app/',{
-                method:'POST',
-                headers:{
-                    Accept:'application/json',
-                    'Content-Type':'application/json',
+            await fetch('https://e-commerce-five-snowy-66.vercel.app/addproduct', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body:JSON.stringify(product),
-            }).then((resp)=>resp.json()).then((data)=>{
-                data.success?alert("Product Added"):alert("Failed")
+                body: JSON.stringify(product),
             })
+            .then((resp) => resp.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Product Added");
+                    setProductDetails({
+                        name: "",
+                        image: "",
+                        category: "women",
+                        new_price: "",
+                        old_price: ""
+                    });
+                    setImage(false);
+                } else {
+                    alert("Failed");
+                }
+            });
         }
-    }
-
+    };
 
     return (
         <div className='add-product'>
@@ -86,7 +99,7 @@ const AddProduct = () => {
             </div>
             <button onClick={() => { Add_Product() }} className='addproduct-btn'>ADD</button>
         </div>
-    )
-}
+    );
+};
 
-export default AddProduct
+export default AddProduct;
