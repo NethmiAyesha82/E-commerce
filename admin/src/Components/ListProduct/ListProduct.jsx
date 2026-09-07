@@ -7,9 +7,16 @@ const ListProduct = () => {
     const [allproduct, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const BACKEND_URL = "https://e-commerce-five-snowy-66.vercel.app";
+
     const fetchInfo = async () => {
         try {
-            const res = await fetch('https://e-commerce-five-snowy-66.vercel.app/allproducts');
+            setLoading(true);
+            const res = await fetch(`${BACKEND_URL}/allproducts`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
             if (!res.ok) {
                 throw new Error(`HTTP Error: ${res.status}`);
@@ -30,21 +37,18 @@ const ListProduct = () => {
 
     const remove_product = async (id) => {
         try {
-            const response = await fetch(
-                'https://e-commerce-five-snowy-66.vercel.app/removeproduct',
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id }),
-                }
-            );
+            const response = await fetch(`${BACKEND_URL}/removeproduct`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }),
+            });
 
             if (response.ok) {
-                await response.json();
-                await fetchInfo();
+                // Front-end state එකෙන් එකවරම remove කිරීම (Fast UI update)
+                setAllProducts((prev) => prev.filter((p) => p.id !== id));
             }
         } catch (error) {
             console.error("Delete Error:", error);
@@ -68,10 +72,10 @@ const ListProduct = () => {
                 <hr />
 
                 {loading ? (
-                    <p style={{ textAlign: 'center' }}>Loading...</p>
+                    <p style={{ textAlign: 'center', padding: '20px' }}>Loading products...</p>
                 ) : allproduct.length > 0 ? (
-                    allproduct.map((product, index) => (
-                        <div key={product.id || index}>
+                    allproduct.map((product) => (
+                        <div key={product._id || product.id}>
                             <div className="listproduct-format-main listproduct-format">
                                 <img
                                     src={product.image}
@@ -96,14 +100,7 @@ const ListProduct = () => {
                         </div>
                     ))
                 ) : (
-                    <p
-                        style={{
-                            textAlign: 'center',
-                            marginTop: '20px',
-                        }}
-                    >
-                        No products found.
-                    </p>
+                    <p style={{ textAlign: 'center', marginTop: '20px' }}>No products found.</p>
                 )}
             </div>
         </div>
