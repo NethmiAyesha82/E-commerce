@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const app = express();
 
@@ -29,6 +31,22 @@ app.use(
 );
 
 app.options("*", cors());
+
+cloudinary.config({
+  cloud_name: "dkeg1y2ur",
+  api_key: "376936162394246",
+  api_secret: "o2LzXnq9wBrOfCQRjV7lW0CXtRs"
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "ecommerce-products",
+    allowed_formats: ["jpg", "png", "jpeg"]
+  }
+});
+
+const upload = multer({ storage: storage });
 
 const mongoURI = "mongodb+srv://root:1234@cluster0.gztopa6.mongodb.net/ecommerce";
 
@@ -70,9 +88,6 @@ const Users =
     cartData: { type: Object },
     date: { type: Date, default: Date.now }
   });
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 const fixImageUrl = (product) => {
   if (!product) return product;
@@ -174,15 +189,13 @@ app.post("/upload", upload.single("product"), (req, res) => {
     if (!req.file) {
       return res.status(400).json({ success: 0, message: "No file uploaded" });
     }
-    const b64 = Buffer.from(req.file.buffer).toString("base64");
-    let mimeType = req.file.mimetype;
-    let dataURI = "data:" + mimeType + ";base64," + b64;
 
     res.json({
       success: 1,
-      image_url: dataURI
+      image_url: req.file.path
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ success: 0, message: "Image processing error" });
   }
 });
