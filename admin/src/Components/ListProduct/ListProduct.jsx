@@ -3,7 +3,6 @@ import './ListProduct.css';
 import cross_icon from '../../assets/cross_icon.png';
 
 const ListProduct = () => {
-
     const [allproduct, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -23,7 +22,12 @@ const ListProduct = () => {
             }
 
             const data = await res.json();
-            setAllProducts(data);
+            
+            const uniqueProducts = Array.from(
+                new Map(data.map((item) => [item.id, item])).values()
+            );
+
+            setAllProducts(uniqueProducts);
         } catch (error) {
             console.error("Fetch Error:", error);
         } finally {
@@ -47,7 +51,6 @@ const ListProduct = () => {
             });
 
             if (response.ok) {
-                // Front-end state එකෙන් එකවරම remove කිරීම (Fast UI update)
                 setAllProducts((prev) => prev.filter((p) => p.id !== id));
             }
         } catch (error) {
