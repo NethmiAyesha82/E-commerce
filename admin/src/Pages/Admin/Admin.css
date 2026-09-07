@@ -9,10 +9,15 @@
     width: 100%;
     overflow-y: auto;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 @media (max-width: 800px) {
     .admin-layout {
         flex-direction: column; 
+    }
+    
+    .main-content {
+        padding: 10px;
     }
 }
