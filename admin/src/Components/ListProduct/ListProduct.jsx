@@ -4,25 +4,18 @@ import cross_icon from '../../assets/cross_icon.png';
 
 const ListProduct = () => {
 
-    console.log("ListProduct Component Rendered");
-
     const [allproduct, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchInfo = async () => {
         try {
-            console.log("Fetching Products...");
-
-            const res = await fetch('https://e-commerce-five-snowy-66.vercel.app/');
+            const res = await fetch('https://e-commerce-five-snowy-66.vercel.app/allproducts');
 
             if (!res.ok) {
                 throw new Error(`HTTP Error: ${res.status}`);
             }
 
             const data = await res.json();
-
-            console.log("Fetched Products:", data);
-
             setAllProducts(data);
         } catch (error) {
             console.error("Fetch Error:", error);
@@ -38,7 +31,7 @@ const ListProduct = () => {
     const remove_product = async (id) => {
         try {
             const response = await fetch(
-                'https://e-commerce-five-snowy-66.vercel.app/',
+                'https://e-commerce-five-snowy-66.vercel.app/removeproduct',
                 {
                     method: 'POST',
                     headers: {
@@ -49,10 +42,7 @@ const ListProduct = () => {
                 }
             );
 
-            const result = await response.json();
-
-            console.log("Delete Response:", result);
-
+            await response.json();
             await fetchInfo();
         } catch (error) {
             console.error("Delete Error:", error);
