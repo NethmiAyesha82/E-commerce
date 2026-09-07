@@ -4,8 +4,8 @@
     align-items: center;  
     width: 96%;  
     height: calc(100vh - 40px); 
-    padding: 10px 40px;  
-    margin: 15px auto; 
+    padding: 15px 50px;  
+    margin: 20px auto; 
     border-radius: 6px;  
     background: white; 
     box-sizing: border-box; 
@@ -38,7 +38,7 @@
 }  
   
 .listproduct-product-icon {  
-    height: 70px;  
+    height: 80px;  
     object-fit: contain;
 }  
   
@@ -73,9 +73,9 @@
 @media (max-width: 1280px) {  
     .list-product {  
         width: 95%;  
-        padding: 10px 30px;  
+        padding: 10px 40px;  
+        margin: 15px auto; 
         height: calc(100vh - 30px);
-        margin: 10px auto;
     }  
   
     .listproduct-format-main {  
@@ -84,16 +84,16 @@
     }  
   
     .listproduct-product-icon {  
-        height: 65px;  
+        height: 75px;  
     }  
 }  
   
 @media (max-width: 1024px) {  
     .list-product {  
         width: 95%;  
-        padding: 10px 20px;  
+        padding: 10px 25px;  
+        margin: 15px auto; 
         height: calc(100vh - 30px);
-        margin: 10px auto;
     }  
   
     .listproduct-format-main {  
@@ -102,7 +102,7 @@
     }  
   
     .listproduct-product-icon {  
-        height: 60px;  
+        height: 70px;  
     }  
 }  
   
@@ -110,20 +110,20 @@
     .list-product {  
         box-sizing: border-box;  
         width: 95%;  
-        height: calc(100vh - 20px);  
-        padding: 10px 20px;  
-        margin: 10px auto;  
+        height: calc(100vh - 30px);  
+        padding: 10px 30px;  
+        margin: 15px auto;  
     }  
   
     .listproduct-format-main {  
-        padding: 10px 0px;  
+        padding: 15px 0px;  
         color: #454545;  
         font-size: 12px;  
         gap: 5px;  
     }  
   
     .listproduct-product-icon {  
-        height: 50px;  
+        height: 60px;  
     }  
 }  
   
@@ -139,11 +139,11 @@
     .listproduct-format-main {  
         font-size: 10px;  
         gap: 3px;  
-        padding: 8px 0;  
+        padding: 10px 0;  
     }  
   
     .listproduct-product-icon {  
-        height: 40px;  
+        height: 45px;  
     }  
   
     .listproduct-remove-icon {  
