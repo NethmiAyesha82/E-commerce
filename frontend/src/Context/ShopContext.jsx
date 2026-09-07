@@ -12,7 +12,13 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     fetch(`${BASE_URL}/allproducts`)
       .then((response) => response.json())
-      .then((data) => setAll_Product(data))
+      .then((data) => {
+        // Unique products පමණක් filter කරගන්නා logic එක
+        const uniqueProducts = Array.from(
+          new Map(data.map((item) => [item.id, item])).values()
+        );
+        setAll_Product(uniqueProducts);
+      })
       .catch((error) => console.error("Error fetching products:", error));
 
     const token = localStorage.getItem("auth-token");
