@@ -11,6 +11,7 @@ app.use(express.json({ limit: "10mb" }));
 const allowedOrigins = [
   "https://e-commerce-5qys.vercel.app",
   "https://e-commerce-dozh.vercel.app",
+  "https://e-commerce-five-snowy-66.vercel.app",
   "http://localhost:3000",
   "http://localhost:5173"
 ];
@@ -76,7 +77,9 @@ const fixImageUrl = (product) => {
   let prodObj = product._doc ? { ...product._doc } : { ...product };
   let img = prodObj.image || "";
 
-  if (img.startsWith("http://")) {
+  if (img.includes("localhost:4000")) {
+    img = img.replace("http://localhost:4000", "https://e-commerce-five-snowy-66.vercel.app");
+  } else if (img.startsWith("http://")) {
     img = img.replace("http://", "https://");
   }
 
