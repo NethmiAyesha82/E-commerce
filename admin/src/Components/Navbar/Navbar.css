@@ -1,162 +1,176 @@
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 60px;
-  box-shadow: 0 1px 3px -2px black;
-  background: #ffffff;
-  width: 100%;
-  box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 60px;
+    box-shadow: 0 1px 3px -2px black;
+    background: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .nav-logo-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .nav-logo {
-  width: 55px;
-  height: auto;
+    width: 55px;
+    height: auto;
 }
 
 .nav-text-container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .nav-title {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0;
-  color: #171717;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: #171717;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .nav-subtitle {
-  font-size: 14px;
-  font-weight: 600;
-  margin: 0;
-  color: #ff4141;
-  margin-top: -2px;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: #ff4141;
+    margin-top: -2px;
 }
 
 .nav-right-container {
-  display: flex;
-  align-items: center;
-  gap: 35px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
 }
 
 .nav-profile {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
 }
 
-/* Frontend Navbar Login/Logout Button Style */
 .logout-btn {
-  width: 135px;
-  height: 46px;
-  outline: none;
-  border: 1px solid #7a7a7a;
-  border-radius: 75px;
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: 500;
-  background: #ff4141;
-  cursor: pointer;
-  transition: 0.3s;
+    width: 135px;
+    height: 46px;
+    outline: none;
+    border: 1px solid #7a7a7a;
+    border-radius: 75px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
+    background: #ff4141;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .logout-btn:active {
-  background: #f3f3f3;
-  color: #171717;
+    background: #f3f3f3;
+    color: #171717;
 }
 
-/* Responsive Media Queries */
-
 @media (max-width: 1280px) {
-  .navbar {
-    padding: 12px 40px;
-  }
-  .nav-logo {
-    width: 48px;
-  }
-  .nav-title {
-    font-size: 28px;
-  }
-  .nav-right-container {
-    gap: 25px;
-  }
-  .logout-btn {
-    width: 120px;
-    height: 42px;
-    font-size: 15px;
-  }
+    .navbar {
+        padding: 12px 40px;
+    }
+
+    .nav-logo {
+        width: 48px;
+    }
+
+    .nav-title {
+        font-size: 28px;
+    }
+
+    .nav-right-container {
+        gap: 25px;
+    }
+
+    .logout-btn {
+        width: 120px;
+        height: 42px;
+        font-size: 15px;
+    }
 }
 
 @media (max-width: 1024px) {
-  .navbar {
-    padding: 10px 25px;
-  }
-  .nav-logo {
-    width: 42px;
-  }
-  .nav-title {
-    font-size: 25px;
-  }
-  .logout-btn {
-    width: 105px;
-    height: 38px;
-    font-size: 14px;
-  }
+    .navbar {
+        padding: 10px 25px;
+    }
+
+    .nav-logo {
+        width: 42px;
+    }
+
+    .nav-title {
+        font-size: 25px;
+    }
+
+    .logout-btn {
+        width: 105px;
+        height: 38px;
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 800px) {
-  .navbar {
-    padding: 10px 20px;
-  }
-  .nav-logo {
-    width: 40px;
-  }
-  .nav-title {
-    font-size: 24px;
-  }
-  .nav-right-container {
-    gap: 20px;
-  }
-  .nav-profile {
-    width: 45px;
-    height: 45px;
-  }
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .nav-logo {
+        width: 40px;
+    }
+
+    .nav-title {
+        font-size: 24px;
+    }
+
+    .nav-right-container {
+        gap: 20px;
+    }
+
+    .nav-profile {
+        width: 45px;
+        height: 45px;
+    }
 }
 
 @media (max-width: 500px) {
-  .navbar {
-    padding: 8px 12px;
-  }
-  .nav-logo {
-    width: 35px;
-  }
-  .nav-title {
-    font-size: 20px;
-  }
-  .nav-subtitle {
-    font-size: 12px;
-  }
-  .nav-right-container {
-    gap: 15px;
-  }
-  .logout-btn {
-    width: 90px;
-    height: 34px;
-    font-size: 13px;
-  }
-  .nav-profile {
-    width: 40px;
-    height: 40px;
-  }
+    .navbar {
+        padding: 8px 12px;
+    }
+
+    .nav-logo {
+        width: 35px;
+    }
+
+    .nav-title {
+        font-size: 20px;
+    }
+
+    .nav-subtitle {
+        font-size: 12px;
+    }
+
+    .nav-right-container {
+        gap: 15px;
+    }
+
+    .logout-btn {
+        width: 90px;
+        height: 34px;
+        font-size: 13px;
+    }
+
+    .nav-profile {
+        width: 40px;
+        height: 40px;
+    }
 }
