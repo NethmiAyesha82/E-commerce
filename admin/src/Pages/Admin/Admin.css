@@ -19,7 +19,7 @@
 
 @media (max-width: 1280px) {
     .admin-layout {
-        height: calc(100vh - 75px);
+        height: calc(100vh - 72px);
     }
 
     .main-content {
