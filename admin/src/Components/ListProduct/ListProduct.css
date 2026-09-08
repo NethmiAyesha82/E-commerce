@@ -71,15 +71,16 @@
  
 .listproduct-allproduct::-webkit-scrollbar-track { 
     background: #f5f5f5; 
-} 
+}  
   
+/* 1280px */
 @media (max-width: 1280px) {  
     .list-product {  
         width: 95%;  
         padding: 10px 40px;  
         margin: 25px auto; 
-        height: calc(100vh - 120px);
-        max-height: calc(100vh - 170px);
+        height: auto;
+        max-height: calc(100vh - 100px);
     }  
   
     .listproduct-format-main {  
@@ -92,13 +93,14 @@
     }  
 }  
   
+/* 1024px */
 @media (max-width: 1024px) {  
     .list-product {  
         width: 95%;  
         padding: 10px 25px;  
         margin: 20px auto; 
-        height: calc(100vh - 120px);
-        max-height: calc(100vh - 160px);
+        height: auto;
+        max-height: calc(100vh - 80px);
     }  
   
     .listproduct-format-main {  
@@ -111,12 +113,13 @@
     }  
 }  
   
+/* 800px */
 @media (max-width: 800px) {  
     .list-product {  
         box-sizing: border-box;  
         width: 95%;  
-        height: calc(100vh - 100px);  
-        max-height: calc(100vh - 140px);
+        height: auto;
+        max-height: calc(100vh - 60px);
         padding: 10px 30px;  
         margin: 20px auto;  
     }  
@@ -133,13 +136,14 @@
     }  
 }  
   
+/* 500px */
 @media (max-width: 500px) {  
     .list-product {  
         width: 100%;  
-        height: calc(100vh - 100px); 
-        max-height: calc(100vh - 120px);
+        height: auto;
+        max-height: calc(100vh - 40px);
         padding: 10px;  
-        margin: 10px auto 20px auto;  
+        margin: 10px auto 30px auto;  
         border-radius: 0;  
     }  
   
@@ -162,14 +166,14 @@
     } 
 }
 
-/* 380px and below */
+/* 380px */
 @media (max-width: 380px) {  
     .list-product {  
         width: 100%;  
-        height: calc(100vh - 100px); 
-        max-height: calc(100vh - 115px);
+        height: auto;
+        max-height: calc(100vh - 40px);
         padding: 8px;  
-        margin: 10px auto 20px auto;  
+        margin: 10px auto 30px auto;  
         border-radius: 0;  
     }  
   
