@@ -4,11 +4,11 @@
     align-items: center;  
     width: 96%;  
     height: calc(100vh - 60px); 
-    max-height: calc(100vh - 150px);
+    max-height: calc(100vh - 175px);
     padding: 10px 50px;  
-    margin-top: 30px;  
-    margin-bottom: 30px;  
-    margin-left: 30px;  
+    margin-top: 25px;  
+    margin-bottom: 25px;  
+    margin-left: 25px;  
     border-radius: 6px;  
     background: white; 
     box-sizing: border-box; 
