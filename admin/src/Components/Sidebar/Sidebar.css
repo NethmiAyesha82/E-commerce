@@ -64,16 +64,3 @@
         font-size: 14px;
     }
 }
-
-@media (max-width: 380px) {
-    .sidebar {
-        padding: 10px 0;
-        gap: 8px;
-    }
-    .sidebar-item {
-        width: 95%;
-        padding: 6px 8px;
-        gap: 10px;
-        font-size: 11px;
-    }
-}
