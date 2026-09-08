@@ -56,7 +56,7 @@
 
 @media (max-width: 500px) {
     .admin-layout {
-        min-height: calc(100vh - 51px);
+        min-height: calc(100vh - 50px);
     }
 
     .main-content {
