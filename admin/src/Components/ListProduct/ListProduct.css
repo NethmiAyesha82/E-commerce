@@ -3,9 +3,12 @@
     flex-direction: column;  
     align-items: center;  
     width: 96%;  
-    height: calc(100% - 60px); 
+    height: calc(100vh - 60px); 
+    max-height: 800px;
     padding: 10px 50px;  
-    margin: 30px auto;  
+    margin-top: 30px;  
+    margin-bottom: 30px;  
+    margin-left: 30px;  
     border-radius: 6px;  
     background: white; 
     box-sizing: border-box; 
@@ -74,8 +77,8 @@
     .list-product {  
         width: 95%;  
         padding: 10px 40px;  
-        margin: 20px auto; 
-        height: calc(100% - 40px);
+        margin: 25px auto; 
+        height: calc(100vh - 120px);
     }  
   
     .listproduct-format-main {  
@@ -93,7 +96,7 @@
         width: 95%;  
         padding: 10px 25px;  
         margin: 20px auto; 
-        height: calc(100% - 40px);
+        height: calc(100vh - 120px);
     }  
   
     .listproduct-format-main {  
@@ -110,7 +113,7 @@
     .list-product {  
         box-sizing: border-box;  
         width: 95%;  
-        height: calc(100% - 40px);  
+        height: calc(100vh - 100px);  
         padding: 10px 30px;  
         margin: 20px auto;  
     }  
@@ -129,11 +132,11 @@
   
 @media (max-width: 500px) {  
     .list-product {  
-        width: 95%;  
-        height: calc(100% - 30px); 
+        width: 100%;  
+        height: calc(100vh - 80px); 
         padding: 10px;  
-        margin: 15px auto;  
-        border-radius: 6px;  
+        margin: 10px auto;  
+        border-radius: 0;  
     }  
   
     .listproduct-format-main {  
@@ -148,8 +151,8 @@
   
     .listproduct-remove-icon {  
         width: 14px;  
-    }  
-
+    } 
+ 
     .listproduct-allproduct { 
         padding-right: 4px; 
     } 
