@@ -2,12 +2,13 @@
     display: flex;  
     flex-direction: column;  
     align-items: center;  
-    width: 95%;  
-    max-width: 1200px;
-    height: 100%;
-    max-height: 85vh;
-    padding: 20px 40px;  
-    margin: 0 auto; 
+    width: 96%;  
+    height: calc(100vh - 100px); 
+    max-height: 800px;
+    padding: 10px 50px;  
+    margin-top: 30px;  
+    margin-bottom: 30px;  
+    margin-left: 30px;  
     border-radius: 6px;  
     background: white; 
     box-sizing: border-box; 
@@ -20,7 +21,7 @@
     text-align: center;
     gap: 10px;  
     width: 100%;  
-    padding: 15px 0px;  
+    padding: 20px 0px;  
     color: #454545;  
     font-size: 15px;  
     font-weight: 600; 
@@ -46,7 +47,7 @@
   
 .listproduct-remove-icon {  
     cursor: pointer;  
-    margin: 0 auto;  
+    margin: 0 auto; 
     display: block;
 }  
   
@@ -75,8 +76,9 @@
 @media (max-width: 1280px) {  
     .list-product {  
         width: 95%;  
-        padding: 15px 30px;  
-        max-height: 82vh;
+        padding: 10px 40px;  
+        margin: 25px auto; 
+        height: calc(100vh - 120px);
     }  
   
     .listproduct-format-main {  
@@ -85,15 +87,16 @@
     }  
   
     .listproduct-product-icon {  
-        height: 70px;  
+        height: 75px;  
     }  
 }  
   
 @media (max-width: 1024px) {  
     .list-product {  
-        width: 96%;  
-        padding: 15px 20px;  
-        max-height: 80vh;
+        width: 95%;  
+        padding: 10px 25px;  
+        margin: 20px auto; 
+        height: calc(100vh - 120px);
     }  
   
     .listproduct-format-main {  
@@ -102,40 +105,44 @@
     }  
   
     .listproduct-product-icon {  
-        height: 65px;  
+        height: 70px;  
     }  
 }  
   
 @media (max-width: 800px) {  
     .list-product {  
-        width: 96%;  
-        max-height: 78vh;
-        padding: 10px 15px;  
+        box-sizing: border-box;  
+        width: 95%;  
+        height: calc(100vh - 100px);  
+        padding: 10px 30px;  
+        margin: 20px auto;  
     }  
   
     .listproduct-format-main {  
-        padding: 10px 0px;  
+        padding: 15px 0px;  
+        color: #454545;  
         font-size: 12px;  
         gap: 5px;  
     }  
   
     .listproduct-product-icon {  
-        height: 55px;  
+        height: 60px;  
     }  
 }  
   
 @media (max-width: 500px) {  
     .list-product {  
         width: 100%;  
-        max-height: 85vh;
-        padding: 10px 5px;  
+        height: calc(100vh - 80px); 
+        padding: 10px;  
+        margin: 10px auto;  
         border-radius: 0;  
     }  
   
     .listproduct-format-main {  
         font-size: 10px;  
         gap: 3px;  
-        padding: 8px 0;  
+        padding: 10px 0;  
     }  
   
     .listproduct-product-icon {  
