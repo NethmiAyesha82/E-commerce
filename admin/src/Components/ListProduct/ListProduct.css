@@ -77,7 +77,6 @@
     .list-product {  
         width: 95%;  
         padding: 10px 40px;  
-        margin: 25px auto; 
         height: calc(100vh - 120px);
     }  
   
@@ -95,7 +94,6 @@
     .list-product {  
         width: 95%;  
         padding: 10px 25px;  
-        margin: 20px auto; 
         height: calc(100vh - 120px);
     }  
   
@@ -115,7 +113,6 @@
         width: 95%;  
         height: calc(100vh - 100px);  
         padding: 10px 30px;  
-        margin: 20px auto;  
     }  
   
     .listproduct-format-main {  
@@ -135,7 +132,6 @@
         width: 100%;  
         height: calc(100vh - 80px); 
         padding: 10px;  
-        margin: 10px auto;  
         border-radius: 0;  
     }  
   
