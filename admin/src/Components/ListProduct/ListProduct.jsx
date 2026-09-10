@@ -24,8 +24,8 @@ const ListProduct = () => {
 
             const data = await res.json();
             
-            const uniqueProducts = data.filter((item, index, self) =>
-                index === self.findIndex((t) => (t._id ? t._id === item._id : t.id === item.id))
+            const uniqueProducts = Array.from(
+                new Map(data.map((item) => [item.id, item])).values()
             );
 
             setAllProducts(uniqueProducts);
