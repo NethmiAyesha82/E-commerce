@@ -11,6 +11,7 @@ const ShopCategory = (props) => {
     if (fetchProducts) {
       fetchProducts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.category]);
 
   let filteredProducts = all_product.filter(
