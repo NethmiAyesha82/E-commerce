@@ -1,11 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './CSS/ShopCategory.css'
 import { ShopContext } from '../Context/ShopContext'
 import Item from '../Components/Items/Item'
 
 const ShopCategory = (props) => {
-  const { all_product } = useContext(ShopContext)
+  const { all_product, fetchProducts } = useContext(ShopContext)
   const [sortOrder, setSortOrder] = useState("default")
+
+  useEffect(() => {
+    if (fetchProducts) {
+      fetchProducts();
+    }
+  }, [props.category]);
 
   let filteredProducts = all_product.filter(
     (item) => props.category === item.category
@@ -52,7 +58,7 @@ const ShopCategory = (props) => {
 
       <div className="shopcategory-indexSort">
         <p>
-          <span>Showing 1-12</span> out of {filteredProducts.length} products
+          <span>Showing 1-{filteredProducts.length}</span> out of {filteredProducts.length} products
         </p>
 
         <select
@@ -69,7 +75,7 @@ const ShopCategory = (props) => {
       <div className="shopcategory-products">
         {filteredProducts.map((item, i) => (
           <Item
-            key={i}
+            key={item._id || item.id || i}
             id={item.id}
             name={item.name}
             image={item.image}

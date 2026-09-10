@@ -234,8 +234,19 @@ app.post("/addproduct", async (req, res) => {
 
 app.post("/removeproduct", async (req, res) => {
   try {
-    await Product.findOneAndDelete({ id: req.body.id });
-    res.json({ success: true, name: req.body.name });
+    const { id, _id } = req.body;
+    let query = {};
+
+    if (_id && mongoose.Types.ObjectId.isValid(_id)) {
+      query = { _id: _id };
+    } else if (id !== undefined) {
+      query = { id: id };
+    } else {
+      return res.status(400).json({ success: false, message: "No ID provided" });
+    }
+
+    const deletedProduct = await Product.deleteMany(query);
+    res.json({ success: true, count: deletedProduct.deletedCount });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false });

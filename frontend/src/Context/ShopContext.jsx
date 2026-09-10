@@ -9,17 +9,17 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [cartSizes, setCartSizes] = useState({});
 
-  useEffect(() => {
+  const fetchProducts = () => {
     fetch(`${BASE_URL}/allproducts`)
       .then((response) => response.json())
       .then((data) => {
-        // Unique products පමණක් filter කරගන්නා logic එක
-        const uniqueProducts = Array.from(
-          new Map(data.map((item) => [item.id, item])).values()
-        );
-        setAll_Product(uniqueProducts);
+        setAll_Product(data);
       })
       .catch((error) => console.error("Error fetching products:", error));
+  };
+
+  useEffect(() => {
+    fetchProducts();
 
     const token = localStorage.getItem("auth-token");
 
@@ -131,7 +131,8 @@ const ShopContextProvider = (props) => {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
-    getTotalCartItems
+    getTotalCartItems,
+    fetchProducts
   };
 
   return (
