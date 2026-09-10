@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './ListProduct.css';
 import cross_icon from '../../assets/cross_icon.png';
 
 const ListProduct = () => {
     const [allproduct, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const bottomRef = useRef(null);
 
     const BACKEND_URL = "https://e-commerce-five-snowy-66.vercel.app";
 
@@ -38,6 +39,12 @@ const ListProduct = () => {
     useEffect(() => {
         fetchInfo();
     }, []);
+
+    useEffect(() => {
+        if (!loading && allproduct.length > 0) {
+            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [allproduct, loading]);
 
     const remove_product = async (id) => {
         try {
@@ -77,31 +84,34 @@ const ListProduct = () => {
                 {loading ? (
                     <p style={{ textAlign: 'center', padding: '20px' }}>Loading products...</p>
                 ) : allproduct.length > 0 ? (
-                    allproduct.map((product) => (
-                        <div key={product._id || product.id}>
-                            <div className="listproduct-format-main listproduct-format">
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="listproduct-product-icon"
-                                />
+                    <>
+                        {allproduct.map((product) => (
+                            <div key={product._id || product.id}>
+                                <div className="listproduct-format-main listproduct-format">
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="listproduct-product-icon"
+                                    />
 
-                                <p>{product.name}</p>
-                                <p>${product.old_price}</p>
-                                <p>${product.new_price}</p>
-                                <p>{product.category}</p>
+                                    <p>{product.name}</p>
+                                    <p>${product.old_price}</p>
+                                    <p>${product.new_price}</p>
+                                    <p>{product.category}</p>
 
-                                <img
-                                    src={cross_icon}
-                                    alt="remove"
-                                    className="listproduct-remove-icon"
-                                    onClick={() => remove_product(product.id)}
-                                    style={{ cursor: 'pointer' }}
-                                />
+                                    <img
+                                        src={cross_icon}
+                                        alt="remove"
+                                        className="listproduct-remove-icon"
+                                        onClick={() => remove_product(product.id)}
+                                        style={{ cursor: 'pointer' }}
+                                    />
+                                </div>
+                                <hr />
                             </div>
-                            <hr />
-                        </div>
-                    ))
+                        ))}
+                        <div ref={bottomRef} />
+                    </>
                 ) : (
                     <p style={{ textAlign: 'center', marginTop: '20px' }}>No products found.</p>
                 )}

@@ -202,7 +202,7 @@ app.post("/upload", upload.single("product"), (req, res) => {
 
 app.get(["/allproducts", "/allproduct"], async (req, res) => {
   try {
-    let products = await Product.find({});
+    let products = await Product.find({}).sort({ _id: 1 });
     let fixedProducts = products.map(fixImageUrl);
     res.send(fixedProducts);
   } catch (error) {
