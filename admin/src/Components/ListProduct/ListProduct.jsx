@@ -5,7 +5,7 @@ import cross_icon from '../../assets/cross_icon.png';
 const ListProduct = () => {
     const [allproduct, setAllProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const bottomRef = useRef(null);
+    const listContainerRef = useRef(null);
 
     const BACKEND_URL = "https://e-commerce-five-snowy-66.vercel.app";
 
@@ -24,8 +24,8 @@ const ListProduct = () => {
 
             const data = await res.json();
             
-            const uniqueProducts = Array.from(
-                new Map(data.map((item) => [item.id, item])).values()
+            const uniqueProducts = data.filter((item, index, self) =>
+                index === self.findIndex((t) => (t._id ? t._id === item._id : t.id === item.id))
             );
 
             setAllProducts(uniqueProducts);
@@ -40,9 +40,10 @@ const ListProduct = () => {
         fetchInfo();
     }, []);
 
+    // මුළු පිටුව වෙනුවට Products Container Box එක විතරක් යටට scroll කිරීම
     useEffect(() => {
-        if (!loading && allproduct.length > 0) {
-            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (!loading && allproduct.length > 0 && listContainerRef.current) {
+            listContainerRef.current.scrollTop = listContainerRef.current.scrollHeight;
         }
     }, [allproduct, loading]);
 
@@ -78,40 +79,37 @@ const ListProduct = () => {
                 <p>Remove</p>
             </div>
 
-            <div className="listproduct-allproduct">
+            <div className="listproduct-allproduct" ref={listContainerRef}>
                 <hr />
 
                 {loading ? (
                     <p style={{ textAlign: 'center', padding: '20px' }}>Loading products...</p>
                 ) : allproduct.length > 0 ? (
-                    <>
-                        {allproduct.map((product) => (
-                            <div key={product._id || product.id}>
-                                <div className="listproduct-format-main listproduct-format">
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="listproduct-product-icon"
-                                    />
+                    allproduct.map((product) => (
+                        <div key={product._id || product.id}>
+                            <div className="listproduct-format-main listproduct-format">
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="listproduct-product-icon"
+                                />
 
-                                    <p>{product.name}</p>
-                                    <p>${product.old_price}</p>
-                                    <p>${product.new_price}</p>
-                                    <p>{product.category}</p>
+                                <p>{product.name}</p>
+                                <p>${product.old_price}</p>
+                                <p>${product.new_price}</p>
+                                <p>{product.category}</p>
 
-                                    <img
-                                        src={cross_icon}
-                                        alt="remove"
-                                        className="listproduct-remove-icon"
-                                        onClick={() => remove_product(product.id)}
-                                        style={{ cursor: 'pointer' }}
-                                    />
-                                </div>
-                                <hr />
+                                <img
+                                    src={cross_icon}
+                                    alt="remove"
+                                    className="listproduct-remove-icon"
+                                    onClick={() => remove_product(product.id)}
+                                    style={{ cursor: 'pointer' }}
+                                />
                             </div>
-                        ))}
-                        <div ref={bottomRef} />
-                    </>
+                            <hr />
+                        </div>
+                    ))
                 ) : (
                     <p style={{ textAlign: 'center', marginTop: '20px' }}>No products found.</p>
                 )}
