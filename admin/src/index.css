@@ -4,10 +4,14 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: "Poppins", sans-serif;
     background-color: #fac3c3;
     width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;
 }
